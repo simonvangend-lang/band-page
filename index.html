@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simon van Gend Band — Live in Cape Town</title>
+<meta name="description" content="Listen, follow, and find out where we're playing next." />
+
+<!-- Open Graph: how the link looks when shared on WhatsApp / socials -->
+<meta property="og:title" content="Simon van Gend Band" />
+<meta property="og:description" content="Listen, follow, and catch us live around Cape Town." />
+<meta property="og:type" content="music.musician" />
+
+<style>
+  /* ============================================================
+     THEME — tweak these colours to match your album art / brand
+     ============================================================ */
+  :root {
+    --bg:        #0e0d12;
+    --bg-soft:   #1a1822;
+    --text:      #f4f1ea;
+    --muted:     #a39fb0;
+    --accent:    #e4b363;   /* warm gold — change to your brand colour */
+    --accent-2:  #d96c4a;
+    --radius:    16px;
+    --maxw:      560px;     /* phone-first; caps width on desktop */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(120% 80% at 50% 0%, #221f2c 0%, var(--bg) 60%);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 18px 64px;
+  }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; }
+
+  /* ---------- HERO ---------- */
+  header { text-align: center; padding: 56px 0 36px; }
+  header h1 {
+    font-size: clamp(2.2rem, 9vw, 3.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-weight: 800;
+  }
+  header p.tagline {
+    color: var(--muted);
+    margin-top: 12px;
+    font-size: 1.05rem;
+  }
+
+  /* ---------- FOLLOW BUTTONS ---------- */
+  .follow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 26px 0 8px;
+  }
+  .follow a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--bg-soft);
+    border: 1px solid #2c2937;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: transform .12s ease, border-color .12s ease;
+  }
+  .follow a:active { transform: scale(0.96); }
+  .follow a:hover { border-color: var(--accent); }
+
+  /* ---------- SECTIONS ---------- */
+  section { margin-top: 40px; }
+  section h2 {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .player { margin-bottom: 18px; border-radius: var(--radius); overflow: hidden; }
+  .player iframe { display: block; width: 100%; border: 0; }
+
+  /* Empty-state placeholder shown until you paste a real embed */
+  .placeholder {
+    background: var(--bg-soft);
+    border: 1px dashed #3a3648;
+    border-radius: var(--radius);
+    padding: 22px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .placeholder strong { color: var(--text); }
+
+  /* ---------- SHOWS ---------- */
+  ul.shows { list-style: none; }
+  ul.shows li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--bg-soft);
+    border: 1px solid #2c2937;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .show-date {
+    flex: 0 0 56px;
+    text-align: center;
+    border-right: 1px solid #2c2937;
+    padding-right: 12px;
+  }
+  .show-date .day   { font-size: 1.5rem; font-weight: 800; line-height: 1; }
+  .show-date .month { font-size: 0.72rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.1em; }
+  .show-info { flex: 1; }
+  .show-info .venue { font-weight: 700; }
+  .show-info .city  { color: var(--muted); font-size: 0.88rem; }
+  .show-info a.tix {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.82rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .no-shows { color: var(--muted); font-size: 0.92rem; }
+
+  /* ---------- MAILING LIST ---------- */
+  .mailing {
+    background: linear-gradient(135deg, #211c2b, #2a1f24);
+    border: 1px solid #3a3147;
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .mailing p { color: var(--muted); margin-bottom: 16px; font-size: 0.95rem; }
+  .mailing form { display: flex; flex-direction: column; gap: 10px; }
+  .mailing input[type=email] {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid #3a3648;
+    background: #100f15;
+    color: var(--text);
+    font-size: 1rem;
+  }
+  .mailing button {
+    padding: 14px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #1a1206;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform .12s ease;
+  }
+  .mailing button:active { transform: scale(0.97); }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 48px; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===================== HERO ===================== -->
+  <header>
+    <h1 id="band-name">BAND NAME</h1>
+    <p class="tagline" id="tagline">Loud guitars, honest songs — live around Cape Town.</p>
+
+    <!-- Follow buttons are generated from CONFIG.links below -->
+    <nav class="follow" id="follow"></nav>
+  </header>
+
+  <!-- ===================== LISTEN ===================== -->
+  <section>
+    <h2>Listen</h2>
+
+    <!-- SPOTIFY ----------------------------------------------------------
+         Go to your album/artist on Spotify → ... → Share → Embed →
+         copy the <iframe>. Paste it in place of the .placeholder below. -->
+    <div class="player">
+      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/75FjpUuVNfuwsCONwX9IV8?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+    <!-- BANDCAMP ---------------------------------------------------------
+         On your Bandcamp album page → Share / Embed → copy the iframe. -->
+    <div class="player">
+      <iframe style="border: 0; width: 100%; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=3251392571/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://simonvangend.bandcamp.com/album/dream-im-a-bird">Dream I&#39;m a Bird by Simon van Gend Band</a></iframe>
+    </div>
+
+    <!-- APPLE MUSIC ------------------------------------------------------
+         embed.music.apple.com — get the snippet from the Apple Music
+         embed tool or the "Share → Embed" option. -->
+    <div class="player">
+      <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/za/album/blinking-breathing/1307074078"></iframe>
+    </div>
+
+    <!-- YOUTUBE ----------------------------------------------------------
+         A music video or live clip. YouTube → Share → Embed → copy iframe. -->
+    <div class="player">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/DhVlgJuZQRA?si=dqj_RYFZScj3g-Uo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- ===================== SHOWS ===================== -->
+  <section>
+    <h2>Upcoming shows</h2>
+    <ul class="shows" id="shows"></ul>
+  </section>
+
+  <!-- ===================== MAILING LIST ===================== -->
+  <section>
+    <h2>Stay in the loop</h2>
+    <div class="mailing">
+      <p>Get an email when we announce a gig near you. No spam, just show dates.</p>
+
+      <!-- MAILCHIMP FORM --------------------------------------------------
+           In Mailchimp: Audience → Signup forms → Embedded forms.
+           1. Copy the form's "action" URL into action="" below.
+           2. Copy the hidden bot-protection field (the one that looks like
+              name="b_xxxxx_yyyyy") and paste it where marked.
+           Everything else can stay as-is. -->
+      <form
+        action="https://gmail.us9.list-manage.com/subscribe/post?u=2b5beed6992e4942bbec4235d&amp;id=f290357c7a&amp;f_id=00b2c2e1f0"
+        method="post"
+        target="_blank"
+        novalidate>
+        <input type="email" name="EMAIL" placeholder="you@email.com" required />
+
+        <!-- Anti-bot honeypot — Mailchimp's hidden field. Leave it blank & off-screen. -->
+        <div style="position:absolute; left:-5000px;" aria-hidden="true">
+          <input type="text" name="b_2b5beed6992e4942bbec4235d_f290357c7a" tabindex="-1" value="" />
+        </div>
+
+        <button type="submit">Notify me about gigs</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <span id="year"></span> <span id="footer-band"></span> ·
+    <a href="#" id="contact">Contact / booking</a>
+  </footer>
+
+</div>
+
+<script>
+/* =================================================================
+   CONFIG — edit everything in here. No other code changes needed.
+   ================================================================= */
+const CONFIG = {
+  bandName: "Simon van Gend Band",
+  tagline:  "Listen, follow, and catch us live around Cape Town.",
+  contactEmail: "simonvangend@gmail.com",         // for the footer "booking" link
+
+  // Follow / streaming links (button only appears if a URL is filled in)
+  links: {
+    spotify:   "https://open.spotify.com/artist/4A7ShdTNsrPck0chWmnlXW",   // e.g. https://open.spotify.com/artist/XXXX
+    bandcamp:  "https://simonvangend.bandcamp.com/album/dream-im-a-bird",   // e.g. https://yourband.bandcamp.com
+    apple:     "https://music.apple.com/za/artist/simon-van-gend/212781231",   // e.g. https://music.apple.com/za/artist/XXXX
+    youtube:   "https://music.youtube.com/channel/UCZ76xnNAfF3iBdq0tgNSzlQ",   // e.g. https://youtube.com/@yourband
+    instagram: "https://www.instagram.com/simonvangend/",   // optional
+  },
+
+  // Upcoming shows — add/remove freely. Past dates auto-hide.
+  // date format: "YYYY-MM-DD"
+  shows: [
+    { date: "2026-06-28", venue: "Cafe Roux",         city: "Noordhoek",    tickets: "https://www.quicket.co.za/events/374087-simon-van-gend-band-dream-im-a-bird-live-caf-roux/#/" },
+  ],
+};
+
+/* ---- render (no need to edit below) ---- */
+const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const PLATFORM_LABELS = { spotify:"Spotify", bandcamp:"Bandcamp", apple:"Apple Music", youtube:"YouTube", instagram:"Instagram" };
+
+document.title = CONFIG.bandName + " — Live";
+document.getElementById("band-name").textContent = CONFIG.bandName;
+document.getElementById("tagline").textContent = CONFIG.tagline;
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("footer-band").textContent = CONFIG.bandName;
+const contact = document.getElementById("contact");
+contact.href = "mailto:" + CONFIG.contactEmail;
+
+// follow buttons
+const followEl = document.getElementById("follow");
+Object.entries(CONFIG.links).forEach(([key, url]) => {
+  if (!url) return;
+  const a = document.createElement("a");
+  a.href = url; a.target = "_blank"; a.rel = "noopener";
+  a.textContent = PLATFORM_LABELS[key] || key;
+  followEl.appendChild(a);
+});
+
+// shows (hide past, sort soonest-first)
+const showsEl = document.getElementById("shows");
+const today = new Date(); today.setHours(0,0,0,0);
+const upcoming = CONFIG.shows
+  .map(s => ({ ...s, d: new Date(s.date + "T00:00:00") }))
+  .filter(s => s.d >= today)
+  .sort((a,b) => a.d - b.d);
+
+if (upcoming.length === 0) {
+  showsEl.innerHTML = '<li class="no-shows">No shows on the calendar right now — sign up below and we’ll let you know.</li>';
+} else {
+  upcoming.forEach(s => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <div class="show-date">
+        <div class="day">${s.d.getDate()}</div>
+        <div class="month">${MONTHS[s.d.getMonth()]}</div>
+      </div>
+      <div class="show-info">
+        <div class="venue">${s.venue}</div>
+        <div class="city">${s.city}</div>
+        ${s.tickets ? `<a class="tix" href="${s.tickets}" target="_blank" rel="noopener">Tickets →</a>` : ""}
+      </div>`;
+    showsEl.appendChild(li);
+  });
+}
+</script>
+</body>
+</html>
